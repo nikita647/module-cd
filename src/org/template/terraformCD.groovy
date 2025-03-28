@@ -12,7 +12,7 @@ def call(String repoUrl, String branch = 'main', String credentialsId, String te
     terraformPlan = new terraform_plan()
     terraformApply = new terraform_apply()
     terraformDestroy = new terraform_destroy()
-    ManualApproval = new manualapproval()
+    manualApproval = new manualapproval()
     
     clean.call()
     clone.call(repoUrl, branch, credentialsId)
