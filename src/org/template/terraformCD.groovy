@@ -10,6 +10,7 @@ def call (String url, String branch='main', String creds, String terraform_path)
  terraformInit = new terraform_init()
  terraformPlan = new terraform_plan()
  terraformApply = new terraform_apply()
+ terraformDestroy = new terraform_destroy()
 
 
 clean.call()
@@ -17,6 +18,7 @@ clone.call(url, branch, creds)
 terraformInit.call(terraform_path)
 terraformPlan.call(terraform_path)
 terraformApply.call(terraform_path)
+terraformDestroy.call(terraform_path)
 
   
 }
