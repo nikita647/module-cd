@@ -1,10 +1,6 @@
 package org.terraform
 
-
-    def call(def steps, String dir = '.', boolean autoApprove = true) { 
-        steps.sh """
-        cd ${dir}
-        terraform apply -var-file="dev.tfvars" ${autoApprove ? "-auto-approve" : ""}
-        """
-    
+def call(String terraform_path) {
+    echo "Applying Terraform configuration in ${path}..."
+    sh "terraform -chdir=${terraform_path} apply --auto-approve"
 }
