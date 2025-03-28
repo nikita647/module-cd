@@ -1,24 +1,26 @@
-package org.template
+@Library('terraform@Nikita-187') _
 
-import org.common.*
-import org.terraform.*
- 
-def call (String repoUrl, String branch='main', String credentialsId, String terraform_path) {
- 
- clean = new cleanWs()
- clone = new gitClone()
- terraformInit = new terraform_init()
- terraformPlan = new terraform_plan()
- terraformApply = new terraform_apply()
- terraformDestroy = new terraform_destroy()
+def cipipeline = new org.template.terraformCD()
 
+def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String action = 'apply') {
 
-clean.call()
-clone.call(repoUrl, branch, credentialsId)
-terraformInit.call(terraform_path)
-terraformPlan.call(terraform_path)
-terraformApply.call(terraform_path)
-terraformDestroy.call(terraform_path)
+    def clean = new org.common.cleanWs()
+    def clone = new org.common.gitClone()
+    def terraformInit = new org.terraform.terraform_init()
+    def terraformPlan = new org.terraform.terraform_plan()
+    def terraformApply = new org.terraform.terraform_apply()
+    def terraformDestroy = new org.terraform.terraform_destroy()
 
-  
+    clean.call()
+    clone.call(repoUrl, branch, credentialsId)
+    terraformInit.call(terraform_path)
+    terraformPlan.call(terraform_path)
+
+    if (action == 'apply') {
+        terraformApply.call(terraform_path)
+    } else if (action == 'destroy') {
+        terraformDestroy.call(terraform_path)
+    } else {
+        error("Invalid action: ${action}. Please specify 'apply' or 'destroy'.")
+    }
 }
