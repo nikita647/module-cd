@@ -3,31 +3,28 @@ package org.template
 import org.common.*
 import org.terraform.*
 
+def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String message, String action = 'apply') {
 
-def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String message = '', String action = 'apply') {
-
-    clean = new cleanWs()
-    clone = new gitClone()
-    terraformInit = new terraform_init()
-    terraformPlan = new terraform_plan()
-    terraformApply = new terraform_apply()
-    terraformDestroy = new terraform_destroy()
-    manualApproval = new manualapproval()
+    def clean = new cleanWs()
+    def clone = new gitClone()
+    def terraformInit = new terraform_init()
+    def terraformPlan = new terraform_plan()
+    def terraformApply = new terraform_apply()
+    def terraformDestroy = new terraform_destroy()
+    def manualApproval = new manualapproval()
     
-    clean.call()
-    clone.call(repoUrl, branch, credentialsId)
-    terraformInit.call(terraform_path)
-    terraformPlan.call(terraform_path)
+    clean()
+    clone(repoUrl, branch, credentialsId)
+    terraformInit(terraform_path)
+    terraformPlan(terraform_path)
 
     if (action == 'apply') {
-        manualApproval.call('Approval for infrastructure apply')
-        terraformApply.call(terraform_path)
+        manualApproval('Approval for infrastructure apply')
+        terraformApply(terraform_path)
     } else if (action == 'destroy') {
-        manualApproval.call('Approval for infrastructure destroy')
-        terraformDestroy.call(terraform_path)
+        manualApproval('Approval for infrastructure destroy')
+        terraformDestroy(terraform_path)
     } else {
         error("Invalid action: ${action}. Please specify 'apply' or 'destroy'.")
     }
-
-   
 }
