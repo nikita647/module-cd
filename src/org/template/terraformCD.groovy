@@ -4,7 +4,7 @@ import org.common.*
 import org.terraform.*
 
 
-def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String action = 'apply') {
+def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String message, String action = 'apply') {
 
     clean = new cleanWs()
     clone = new gitClone()
