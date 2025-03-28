@@ -1,8 +1,6 @@
 package org.terraform
 
-def call(def steps, String dir = '.') { 
-        steps.sh """
-        cd ${dir}
-        terraform plan -var-file="dev.tfvars"
-        """
+def call(String terraform_path) { 
+        echo "Running Terraform Plan in ${terraform_path}..."
+        sh "terraform -chdir=${terraform_path} plan"
     }
