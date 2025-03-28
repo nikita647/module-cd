@@ -3,7 +3,7 @@ package org.template
 import org.common.*
 import org.terraform.*
  
-def call (String url, String branch='main', String creds, String terraform_path) {
+def call (String repoUrl, String branch='main', String credentialsId, String terraform_path) {
  
  clean = new cleanWs()
  clone = new gitClone()
@@ -14,7 +14,7 @@ def call (String url, String branch='main', String creds, String terraform_path)
 
 
 clean.call()
-clone.call(url, branch, creds)
+clone.call(repoUrl, branch, credentialsId)
 terraformInit.call(terraform_path)
 terraformPlan.call(terraform_path)
 terraformApply.call(terraform_path)
