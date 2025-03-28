@@ -19,10 +19,10 @@ def call(String repoUrl, String branch, String credentialsId, String terraform_p
     terraformPlan.call(terraform_path)
 
     if (action == 'apply') {
-        manualApproval.call('Approval for infrastructure apply')
+       manualApproval.call(message ?: 'Approval for infrastructure apply')
         terraformApply.call(terraform_path)
     } else if (action == 'destroy') {
-        manualApproval.call('Approval for infrastructure destroy')
+        manualApproval.call(message ?: 'Approval for infrastructure destroy')
         terraformDestroy.call(terraform_path)
     } else {
         error("Invalid action: ${action}. Please specify 'apply' or 'destroy'.")
