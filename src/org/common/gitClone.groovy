@@ -1,9 +1,15 @@
 package org.common
 
-def call(String url, String branch, String creds) {
-    stage("Clone Private Repo") {
-        script{
-                git branch: branch, url: url, credentialsId: creds
-        }
+def call(String repoUrl, String branch = 'main', String credentialsId='') {
+    echo "Cloning repository from ${repoUrl}, branch: ${branch}"
+    
+    if (credentialsId) {
+        echo "Using credentials ID: ${credentialsId}"
+        git branch: branch, 
+            url: repoUrl, 
+            credentialsId: credentialsId
+    } else {
+        git branch: branch, 
+            url: repoUrl
     }
 }
