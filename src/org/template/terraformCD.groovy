@@ -3,7 +3,7 @@ package org.template
 import org.common.*
 import org.terraform.*
 
-def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String message, String action = 'apply') {
+def call(String repoUrl, String branch = 'main', String credentialsId, String terraform_path, String message, String action) {
 
     def clean = new cleanWs()
     def clone = new gitClone()
