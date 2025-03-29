@@ -1,6 +1,7 @@
 package org.common
 
 def call(String repoUrl, String branch = 'main', String credentialsId='') {
+    stage('cloning repositories') {
     echo "Cloning repository from ${repoUrl}, branch: ${branch}"
     
     if (credentialsId) {
@@ -11,5 +12,6 @@ def call(String repoUrl, String branch = 'main', String credentialsId='') {
     } else {
         git branch: branch, 
             url: repoUrl
+    }
     }
 }
